@@ -1,0 +1,20 @@
+{% load static %}
+
+{% block content %}
+<p>Мой баланс: {{balance}}</p>
+
+{% if user_id.role == 1 %}
+    <p>Обратите внимание, что сумма вывода средств не должна превышать суммарную сумму стоимостей созданных заказов.</p>
+    <form action= "{% url 'my_balance_customer' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-success" type="submit">Произвести операцию</button>
+    </form>
+{% else %}
+    <form action= "{% url 'my_balance_freelancer' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-success" type="submit">Произвести операцию</button>
+    </form>
+{% endif %}
+{% endblock %}

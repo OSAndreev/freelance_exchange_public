@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>История сделок</title>
+</head>
+<body>
+{% csrf_token %}
+{% for p in deal_history %}
+<p>ID заказа: {{p.order.id}} </p>
+<p>От кого: {{p.from_who}} </p>
+<p>Кому: {{p.to_who}} </p>
+<p>Сумма: {{p.order.cost}} </p>
+<p>----------------------------</p>
+{% endfor %}
+{% for p in balance_operations %}
+<p>Тип операции: {{p.get_type_operation_display}}
+<p>Сумма: {{p.summa}}</p>
+<p>-----------------------------</p>
+{% endfor %}
+</body>
+</html>

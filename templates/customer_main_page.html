@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница заказчика</title>
+</head>
+<body>
+    <p>Ваш баланс: {{balance}}</p>
+    <a href="./customer_main_page/balance"><button>Мой кошелек</button></a>
+    <a href="./customer_main_page/deal_history"><button>История операций</button></a>
+  <a href="create_order"><button>Создать новый заказ</button></a>
+{% for p, k, l in object_list %}
+
+  <div>
+    <p>Описание - {{p.explanation}}<p>
+    <p>Цена {{p.cost}}<p>
+    <p>Категория {{p.category}}<p>
+    <p>Выдано исполнителю {{p.in_work}}<p>
+    <p>Статус готовности {{p.done}}<p>
+    <p>Исполнитель {{p.performer.user_id.last_name}} {{p.performer.user_id.first_name}}</p>
+    {% if p.work_ready == None %}
+        <p>Ответ: отсутствует</p>
+    {% elif k == False %}
+        <p>Ответ исполнителя: {{p.work_ready}}</p>
+    {% elif k == True %}
+        <p>Ответ исполнителя не принят: {{p.work_ready}}</p>
+    {% endif %}
+    {% if p.done == False and p.performer != None and p.work_ready != None and k == False%}
+      <a href="./customer_main_page/accept/{{p.id}}">
+      <button>Принять ответ</button>
+      </a>
+      <p></p>
+      <a href="./customer_main_page/reject/{{p.id}}">
+      <button>Отклонить ответ</button>
+      </a>
+    {% elif p.done == True and p.degree_to_performer == None %}
+      <p>Заказ был принят.</p>
+      <form name="Оценка" action="./customer_main_page/rate/{{p.id}}" method="post">
+              <label>Оцените исполнителя </label>
+                {% csrf_token %}
+              {{ form.degree }}
+              <button type="submit">Оценить</button>
+            </form>
+    {% elif p.done == True and p.performer != None and p.work_ready != None%}
+      <p>Ваша оценка исполнителю: {{p.get_degree_to_performer_display}}</p>
+    {% endif %}
+      <p></p>
+      {% if p.performer == None and l == False %}
+        <a href="./customer_main_page/order_responses/{{p.pk}}">
+        <button>На Ваш заказ откликнулись</button>
+        </a>
+      {% elif p.performer == None and l == True %}
+        <p>Пока на ваш заказ никто не откликнулся.</p>
+      {% endif %}
+      <p></p>
+      {% if p.in_work == 0 %}
+        <a href="./customer_main_page/delete_order/{{p.pk}}">
+        <button>Отменить заказ</button>
+        </a>
+      {% endif %}
+    <p>-----------------------------------------------</p>
+</div>
+{% endfor %}
+</body>
+</html>
