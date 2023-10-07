@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Мои заказы</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link href="{% static 'bootstrap/css/score.css' %}" rel="stylesheet">
+    <style>
+/* Стиль для жирной зеленой галочки */
+.checkmark {
+    color: green;
+    font-weight: bold;
+}
+
+/* Стиль для жирного красного крестика */
+.cross {
+    color: red;
+    font-weight: bold;
+
+
+    </style>
+</head>
+<body>
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center mb-5">
+                <h1>Мои заказы</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-wrap">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Описание</th>
+                            <th>Цена</th>
+                            <th>Категория</th>
+                            <th>Выдано исполнителю</th>
+                            <th>Статус готовности</th>
+                            <th>Исполнитель</th>
+                            <th>Ответ</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for p, k in object_list %}
+                        <tr>
+                            <td>{{ p.explanation }}</td>
+                            <td>{{ p.cost }}</td>
+                            <td>{{ p.category }}</td>
+                            <td>
+                                {% if p.in_work %}
+                                <i class="fas fa-check checkmark fa-2x"></i> <!-- Checkmark icon when p.done is True -->
+                              {% else %}
+                                <i class="fas fa-times cross fa-2x"></i> <!-- Cross icon when p.done is False -->
+                              {% endif %}</td>
+                             <td>
+                                {% if p.done %}
+                                <i class="fas fa-check checkmark fa-2x"></i> <!-- Checkmark icon when p.done is True -->
+                              {% else %}
+                                <i class="fas fa-times cross fa-2x"></i> <!-- Cross icon when p.done is False -->
+                              {% endif %}</td>
+                            <td>{{ p.performer.user_id.last_name}} {{ p.performer.user_id.first_name}}</td>
+
+
+
+                            <td>
+    {% if p.work_ready == None %}
+        <p>Ответ: отсутствует</p>
+    {% elif k == False %}
+        <p>Ответ исполнителя: {{p.work_ready}}</p>
+    {% elif k == True %}
+        <p>Ответ исполнителя не принят: {{p.work_ready}}</p>
+    {% endif %}
+       <!-- Кнопки в этом же поле ответа исполнителя, если ответа нет, то кнопок нет -->
+    {% if p.done == False and p.performer != None and p.work_ready != None and k == False %}
+      <a href="my_orders/accept/{{p.id}}">
+      <button>Принять ответ</button>
+      </a>
+      <p></p>
+      <a href="my_orders/reject/{{p.id}}">
+      <button>Отклонить ответ</button>
+      </a>
+        <!-- Сделать модальное окно успеха "Заказ был принят" и оценка -->
+    {% elif p.done == True and p.degree_to_performer == None %}
+      <p>Заказ был принят.</p>
+      <form name="Оценка" action="my_orders/rate/{{p.id}}" method="post">
+              <label>Оцените исполнителя </label>
+                {% csrf_token %}
+              {{ form.degree }}
+              <button type="submit">Оценить</button>
+            </form>
+            <!-- Появляется после принятия заказа и оценки исполнителя -->
+    {% elif p.done == True and p.performer != None and p.work_ready != None %}
+      <p>Ваша оценка исполнителю: {{p.get_degree_to_performer_display}}</p>
+    {% endif %}
+      <p></p>
+      {% if p.performer == None %}
+        <a href="my_orders/order_responses/{{p.pk}}">
+               <!-- Старое -->
+        <button>На Ваш заказ откликнулись</button>
+        </a>
+      {% endif %}
+      <p></p>
+      {% if p.in_work == 0 %}
+        <a href="my_orders/delete_order/{{p.pk}}">
+        <button>Отменить заказ</button>
+        </a>
+      {% endif %}
+                        </td>
+
+{% endfor %}
+
+
+</table>
+                </div>
+            </div>
+        </div>
+
+</section>
+
+<script src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/popper.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/main.js' %}"></script>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Мои Работы</title>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link href="{% static 'bootstrap/css/score.css' %}" rel="stylesheet">
+    <style>
+/* Стиль для жирной зеленой галочки */
+.checkmark {
+    color: green;
+    font-weight: bold;
+}
+
+/* Стиль для жирного красного крестика */
+.cross {
+    color: red;
+    font-weight: bold;
+
+
+    </style>
+</head>
+<body>
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 text-center mb-5">
+                <h1>Мои работы</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-wrap">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Описание</th>
+                            <th>Заказчик</th>
+                            <th>Cтоимость</th>
+                            <th>Выполнено</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                          {% for p, k in object_list %}
+                        <tr>
+                            <td>{{ p.explanation }}</td>
+                            <td>{{p.customer.user_id.last_name}} {{p.customer.user_id.first_name}}</td>
+                            <td>{{p.cost}}</td>
+                            <td>
+                                {% if p.done %}
+                                <i class="fas fa-check checkmark fa-2x"></i> <!-- Checkmark icon when p.done is True -->
+                              {% else %}
+                                <i class="fas fa-times cross fa-2x"></i> <!-- Cross icon when p.done is False -->
+                              {% endif %}
+                            {% if p.done == True and p.degree_to_company == None %}
+          <form name="Оценка" action="my_works/save_answer/{{p.id}}" method="post">
+              <label>Оцените заказчика </label>
+                {% csrf_token %}
+              {{ form.degree }}
+              <button type="submit">Оценить</button>
+            </form>
+      {% elif p.done == False and k == False%}
+        <form name="Ваш ответ" action="my_works/save_answer/{{p.id}}" method="post">
+          <label>Приложите ссылку на облако с загруженным файлом: </label>
+         {% csrf_token %}
+          {{ form.work_form }}
+          <p>Текущий ответ - {{p.work_ready}}</p>
+          <button type="submit">Сохранить</button>
+        </form>
+      {% elif p.done == False and k == True %}
+      <form name="Ваш ответ" action="my_works/save_answer/{{p.id}}" method="post">
+          <label>Ваш ответ не был принят. Приложите ссылку на облако с исправленным файлом: </label>
+         {% csrf_token %}
+          {{ form.work_form }}
+          <p>Отклоненный ответ - {{p.work_ready}}</p>
+          <button type="submit">Сохранить</button>
+        </form>
+      {% else %}
+        <p>Оценка заказчику: {{p.get_degree_to_company_display}}</p>
+      {% endif %}
+
+
+</div>
+{% endfor %}
+
+
+
+                </div>
+            </div>
+        </div>
+
+</section>
+
+<script src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/popper.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/main.js' %}"></script>
+
+</body>
+</html>

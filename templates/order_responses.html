@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for offer in user_offers %}
+    <p> Заказ: {{ offer.details.explanation }} </p>
+    <p> Имя Фрилансера:{{ offer.freelance_variety.user_id.last_name }} {{ offer.freelance_variety.user_id.first_name }} </p>
+    <p> Оценка: {{ offer.freelance_variety.degree }} </p>
+    <p> Категория: {{ offer.details.category }} </p>
+    {% if offer.take %}
+    <a href="./{{offer.pk}}/remove">
+     <button>Убрать с заказа</button>
+        </a>
+    {% else %}
+    <a href="./{{offer.pk}}">
+        <button>Назначить на заказ</button>
+        </a>
+    {% endif %}
+    <p>-----------------------------------------------</p>
+{% endfor %}
+</body>
+</html>

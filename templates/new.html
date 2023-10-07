@@ -1,0 +1,19 @@
+{% for order in object_list %}
+  <div>
+    <p>Описание - {{ order.explanation }}</p>
+    <p>Заказчик {{ order.customer.user_id.last_name }} {{ order.customer.user_id.first_name }}</p>
+    <p>Цена {{ order.cost }}</p>
+    <p>Дедлайн {{ order.deadline }}</p>
+    <p></p>
+    {% if order.some_condition %} {# Replace with your condition #}
+      <a href="main_page/refuse/{{ order.id }}">
+        <button>Вы откликнулись</button>
+      </a>
+    {% else %}
+      <a href="main_page/chose/{{ order.id }}">
+        <button>Откликнуться</button>
+      </a>
+    {% endif %}
+    <p>-----------------------------------------------</p>
+  </div>
+{% endfor %}
