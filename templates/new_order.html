@@ -1,4 +1,5 @@
 {% load static %}
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 
@@ -78,3 +79,17 @@
 </body>
 
 </html>
+=======
+
+{% block content %}
+<p>Мой баланс: {{balance}}</p>
+<p>Обратите внимание: суммарная стоимость ваших заказов должна быть меньше чем Ваш баланс</p>
+<form action= "{% url 'create_order' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-success" type="submit">Опубликовать</button>
+</form>
+
+{% endblock %}
+
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802

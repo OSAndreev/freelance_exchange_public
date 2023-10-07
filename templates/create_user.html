@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+<<<<<<< HEAD
 
 <head>
     <meta charset="utf-8">
@@ -112,3 +113,26 @@
 </body>
 
 </html>
+=======
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous"></head>
+
+</head>
+<body>
+<form method="post">
+  {% csrf_token %}
+  {{ form.last_name }}
+  {{ form.first_name }}
+  {{ form.mail }}
+  {{ form.password }}
+  {{ form.bank_account }}
+  {{ form.role }}
+  {{ form.about }}
+  <span>{{error}}</span>
+  <button class="btn btn-success" type="submit">Опубликовать</button>
+</form>
+</body>
+</html>
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802

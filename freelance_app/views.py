@@ -2,8 +2,15 @@ import django_filters
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import CreateView, UpdateView, ListView
+<<<<<<< HEAD
 
 from .models import *
+=======
+from datetime import date
+
+from .models import *
+from .serializers import *
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
@@ -28,6 +35,10 @@ def freelancer_main_page(request):
         else:
             took.append(False)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
     balance = check_my_balance(user_id)
 
     return render(request, 'order_list.html', {'object_list': zip(queryset, took), 'offers_list': offers, 'balance': balance})
@@ -40,7 +51,11 @@ def update_deal_history(pk):
 def refuse_offer(request, pk):
     order = Order.objects.get(pk=pk)
     Offers.objects.filter(details=order).delete()
+<<<<<<< HEAD
     return redirect('free_orders')
+=======
+    return redirect('freelancer_main_page')
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
 
 def update_offers(request,pk):
     order = Order.objects.get(pk=pk)
@@ -48,7 +63,12 @@ def update_offers(request,pk):
     freelancer = Freelancer.objects.get(user_id=user_id)
     new_offer = Offers.objects.create(details=order, freelance_variety=freelancer, take=False)
     new_offer.save()
+<<<<<<< HEAD
     return redirect('free_orders')
+=======
+
+    return redirect('freelancer_main_page')
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
 
 def freelancer_my_works(request, pk=''):
     user_id = get_object_or_404(UserData, django_user_id=get_object_or_404(User, id=request.user.id))
@@ -139,8 +159,20 @@ def customer_main_page(request, pk=''):
         else:
             rejected.append(False)
 
+<<<<<<< HEAD
 
     object_list = zip(queryset, rejected)
+=======
+    orders_id_list = list(Order.objects.filter(customer=customer_id).values_list('id', flat=True))
+    offered = []
+    for j in orders_id_list:
+        try:
+            Offers.objects.get(details=Order.objects.get(id=j))
+            offered.append(False)
+        except:
+            offered.append(True)
+    object_list = zip(queryset, rejected, offered)
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
     return render(request, 'customer_main_page.html', {'object_list': object_list, 'form': form, 'balance': balance})
 
 def update_performer_degree(performer):
@@ -189,7 +221,11 @@ def accept_order(request, pk):
     order.in_work = 1
     order.save()
     update_deal_history(pk)
+<<<<<<< HEAD
     return redirect('my_orders')
+=======
+    return redirect('customer_main_page')
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
 
 
 def refuse_order(request, pk):
@@ -209,7 +245,11 @@ def create_order(request): # Отлично работает
             user_id = get_object_or_404(UserData, django_user_id=get_object_or_404(User, id=request.user.id))
             all_cost =  list(Order.objects.filter(customer=get_object_or_404(Customer, user_id=user_id), done = False).values_list('cost', flat=True))
             print(all_cost)
+<<<<<<< HEAD
             if created_order.cost <= (check_my_balance(user_id) - sum(all_cost)):
+=======
+            if created_order.cost <= (check_my_balance(user_id) - sum(all_cost)) and (created_order.deadline > date.today()):
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
                 created_order.customer = get_object_or_404(Customer, user_id=user_id)
                 created_order.save()
                 return redirect('customer_main_page')
@@ -243,7 +283,11 @@ def create_user(request):
                 new_balance_operation = BalanceOperations.objects.create(user_id=user_id, type_operation=1, summa=0)
                 new_balance_operation.save()
                 new_customer.save()
+<<<<<<< HEAD
                 return redirect('customer_main_page')
+=======
+                return redirect('create_order')
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
             elif created_user.role == 0:
                 new_freelancer = Freelancer.objects.create(user_id=user_id)
                 new_balance_operation = BalanceOperations.objects.create(user_id=user_id, type_operation=1, summa=0)
@@ -308,7 +352,11 @@ def assign_to_order(request, pk):
     order.in_work = 1
     order.performer = offer.freelance_variety
     order.save()
+<<<<<<< HEAD
     return redirect('my_orders')
+=======
+    return redirect('order_responses', order.pk)
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
 
 def remove_from_order(request, pk):
     offer = Offers.objects.get(pk=pk)
@@ -360,6 +408,10 @@ class OrderUpdateView(UpdateView):
     success_url = reverse_lazy('start_page')
 
 
+<<<<<<< HEAD
+=======
+# new
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
 def my_balance(request):
     user_id = get_object_or_404(UserData, django_user_id=get_object_or_404(User, id=request.user.id))
     if request.method == 'POST':
@@ -390,6 +442,7 @@ def my_balance(request):
     }
     return render(request, 'balance_update.html', context=data)
 
+<<<<<<< HEAD
 def my_orders(request, pk=''):
 
     user_id = get_object_or_404(UserData, django_user_id=get_object_or_404(User, id=request.user.id))
@@ -450,6 +503,8 @@ def free_orders(request):
     return render(request, 'free_orders.html', {'object_list': zip(queryset, took)})
 
 
+=======
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
 def show_deal_history(request):
     user_id = get_object_or_404(UserData, django_user_id=get_object_or_404(User, id=request.user.id))
     if user_id.role == 1:
@@ -465,7 +520,11 @@ def delete_order(request,pk):
     order = Order.objects.get(id=pk)
     Offers.objects.filter(details=order).delete()
     order.delete()
+<<<<<<< HEAD
     return redirect('my_orders')
+=======
+    return redirect('customer_main_page')
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
 
 
 

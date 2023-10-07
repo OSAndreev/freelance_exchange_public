@@ -34,6 +34,7 @@ urlpatterns = [
     path('orders/add', add_order, name='add_order'),
     path('orders/all', OrderViewAll.as_view(), name='all_orders'),
     path('orders/update/<int:pk>', OrderUpdateView.as_view(), name='update_order'),
+<<<<<<< HEAD
     re_path(r'customer/customer_main_page/my_orders/order_responses/(?P<order_id>\w+)/$', order_responses, name="order_responses"),
     re_path(r'customer/customer_main_page/my_orders/order_responses/.*?/(?P<pk>\w+)/$', assign_to_order),
     re_path(r'customer/customer_main_page/my_orders/order_responses/.*?/(?P<pk>\w+)/remove$', remove_from_order),
@@ -48,10 +49,28 @@ urlpatterns = [
     #новое
     path('customer/customer_main_page/my_orders', my_orders, name='my_orders'),
     path('freelancer/main_page/free_orders', free_orders, name='free_orders'),
+=======
+    re_path(r'customer/customer_main_page/order_responses/(?P<order_id>\w+)/$', order_responses, name="order_responses"),
+    re_path(r'customer/customer_main_page/order_responses/.*?/(?P<pk>\w+)/$', assign_to_order),
+    re_path(r'customer/customer_main_page/order_responses/.*?/(?P<pk>\w+)/remove$', remove_from_order),
+    # Все нижние Никитины
+    path('freelancer/main_page/chose/<int:pk>', update_offers),
+    path('freelancer/main_page/my_works', freelancer_my_works, name='my_works'),
+    path('freelancer/main_page/refuse/<int:pk>', refuse_offer),
+    path('freelancer/main_page/my_works/save_answer/<int:pk>', freelancer_my_works),
+    path('customer/customer_main_page/accept/<int:pk>', accept_order),
+    path('customer/customer_main_page/rate/<int:pk>', customer_main_page),
+    path('customer/customer_main_page/reject/<int:pk>', refuse_order),
+    #новое
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
     path('customer/customer_main_page/balance', my_balance, name='my_balance_customer'),
     path('freelancer/main_page/balance', my_balance, name='my_balance_freelancer'),
     path('customer/customer_main_page/deal_history', show_deal_history),
     path('freelancer/main_page/deal_history', show_deal_history),
+<<<<<<< HEAD
     path('customer/customer_main_page/my_orders/delete_order/<int:pk>', delete_order)
+=======
+    path('customer/customer_main_page/delete_order/<int:pk>', delete_order)
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
 
 ]

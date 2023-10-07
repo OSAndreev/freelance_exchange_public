@@ -4,11 +4,15 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
 class OrderForm(ModelForm):
     class Meta:
         model = Order
         fields = ['explanation', 'cost', 'category', 'deadline']
+<<<<<<< HEAD
         labels = {
             "explanation": "",
             "cost": "",
@@ -31,18 +35,39 @@ class OrderForm(ModelForm):
             "deadline": DateInput(attrs={
                 'class': 'form-control form-control-lg',
                 'placeholder': 'Дедлайн', 'type': 'text',
+=======
+        widgets = {
+            "explanation": TextInput(attrs={
+                'class':'form-control',
+                'placeholder': 'Нужно сделать фриланс биржу'
+            }),
+            "cost": NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': '10000'
+            }),
+            "category": Select(attrs={
+                'class': 'form-control',
+            }),
+            "deadline": DateInput(attrs={
+                'class': 'form-control',
+                'placeholder': '', 'type':'text',
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
                 'onfocus': "(this.type='date')"
             }),
         }
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
 class UserDataForm(ModelForm):
     class Meta:
         model = UserData
         fields = ['last_name', 'first_name', 'mail', 'bank_account', 'role', 'about']
         widgets = {
             "last_name": TextInput(attrs={
+<<<<<<< HEAD
                 'class': 'form-control form-control-lg',
                 'placeholder': 'Фамилия'
             }),
@@ -70,10 +95,33 @@ class UserDataForm(ModelForm):
         }
 
 
+=======
+                'class':'form-control'
+            }),
+            "first_name": TextInput(attrs={
+                'class': 'form-control',
+            }),
+            "mail": EmailInput(attrs={
+                'class': 'form-control',
+            }),
+            "bank_account": NumberInput(attrs={
+                'class': 'form-control',
+            }),
+            "role": Select(
+                attrs={
+                    'class': 'form-control',
+                }),
+            "about": TextInput(attrs={
+                'class': 'form-control',
+            }),
+        }
+
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
 class AuthUserForm(AuthenticationForm, forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'password')
+<<<<<<< HEAD
         widgets = {
             'password': TextInput(attrs={
                 'class': 'form-control form-control-lg',
@@ -86,12 +134,15 @@ class AuthUserForm(AuthenticationForm, forms.ModelForm):
                 }
             )
         }
+=======
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
 
 
 class RegisterUserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'password')
+<<<<<<< HEAD
         widgets = {
             'password': TextInput(attrs={
                 'class': 'form-control form-control-lg',
@@ -105,11 +156,16 @@ class RegisterUserForm(forms.ModelForm):
             )
         }
 
+=======
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs['class'] = 'form-control'
+<<<<<<< HEAD
 
+=======
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
     def save(self, commit=True):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password"])
@@ -129,11 +185,18 @@ class AddOrderForm(forms.ModelForm):
         model = Order
         fields = '__all__'
 
+<<<<<<< HEAD
 
 class UpdateOrderForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ['performer', 'degree_to_company', 'degree_to_performer', 'in_work', 'done']
+=======
+class UpdateOrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['performer', 'degree_to_company','degree_to_performer','in_work','done']
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
 
 #Никитина форма
 class WorkReadyForm(forms.Form):
@@ -149,6 +212,7 @@ class BalanceForm(forms.ModelForm):
             "type_operation": "Тип операции",
             "summa": "Сумма"
         }
+<<<<<<< HEAD
         widgets = {
             'type_operation': Select(attrs={
                 'class': 'form-control form-control-lg',
@@ -161,3 +225,5 @@ class BalanceForm(forms.ModelForm):
         }
 
 
+=======
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802

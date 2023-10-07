@@ -38,7 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
 
+=======
+    'rest_framework',
+    'djoser',
+    'corsheaders',
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
 ]
 
 MIDDLEWARE = [
@@ -49,6 +55,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+<<<<<<< HEAD
+=======
+    "corsheaders.middleware.CorsMiddleware",
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
     "django.middleware.common.CommonMiddleware",
 ]
 
@@ -81,7 +91,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME':  'freelance',
         'USER': 'postgres',
+<<<<<<< HEAD
         'PASSWORD': '2442',
+=======
+        'PASSWORD': 'anna.kurdina',
+>>>>>>> 254a8fee79cb304890d74e67445b534a6482c802
         'HOST': 'localhost',
         'PORT': '5432',
         'MEDIA_ROOT': [BASE_DIR / "out_db"]
