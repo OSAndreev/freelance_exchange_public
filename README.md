@@ -1,4 +1,4 @@
-# freelance_exchange_public
+# freelance_exchange_public - Фриланс-биржа «ProfiSearch»
 
 # Инструкция по установке и запуску проекта
 
